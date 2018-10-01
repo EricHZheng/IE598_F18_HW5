@@ -43,7 +43,7 @@ df_wine.columns = ['Class label', 'Alcohol', 'Malic acid', 'Ash',
 #Part 1: Exploratory Data Analysis
 
 #print head and tail of data frame
-pd.set_option('display.max_rows', 10)
+pd.set_option('display.max_rows', 15)
 pd.set_option('display.max_columns', 14)
 pd.set_option('display.width', 120)
 print('\n')
@@ -71,18 +71,38 @@ print('\n' + 'Box Plots:')
 plt.show()
 
 # =============================================================================
-# #1.3 Scatterplot Matrix 
-# #cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
-# print('\n' + 'Scatterplot Matrix:')
-# cols = ['Class label', 'Alcohol', 'Malic acid', 'Ash',
-#                    'Alcalinity of ash', 'Magnesium', 'Total phenols',
-#                    'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins',
-#                    'Color intensity', 'Hue',
-#                    'OD280/OD315 of diluted wines', 'Proline']
-# sns.pairplot(df_wine[cols], size=2)
-# plt.tight_layout()
-# plt.show()   
+# #
+# for i in range(178):
+#     #assign color based on class labels
+#     if df_wine.iat[i,0] == "1":
+#         pcolor = "red"
+#     elif df_wine.iat[i,0] == "2":
+#             pcolor = "green" 
+#     else: 
+#             pcolor = "blue"
+#       #plot rows of data as if they were series data
+#     dataRow = df_wine.iloc[i,1:14]
+#     dataRow.plot(color = pcolor)
+# plt.xlabel("Attribute Index")
+# plt.ylabel(("Attribute Values"))
+# #plt.clf()
+# plt.figure(figsize=(20,16))
+# #plt.tight_layout()
+# plt.show()
 # =============================================================================
+
+ #1.3 Scatterplot Matrix 
+
+print('\n' + 'Scatterplot Matrix:')
+cols = ['Class label', 'Alcohol', 'Malic acid', 'Ash',
+                    'Alcalinity of ash', 'Magnesium', 'Total phenols',
+                    'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins',
+                    'Color intensity', 'Hue',
+                   'OD280/OD315 of diluted wines', 'Proline']
+sns.pairplot(df_wine[cols], size=2)
+plt.tight_layout()
+plt.show()   
+
 
 # =============================================================================
 # #1.3 Heatmap
@@ -231,7 +251,7 @@ LDA_lr_train_score_cv = np.average(cross_val_score(lr, LDA_X_train, y_train, cv 
 LDA_lr_test_score_cv = np.average(cross_val_score(lr, LDA_X_test, y_test, cv = 10))
 
 print('lr_train_score_cv:', LDA_lr_train_score_cv)
-print('lr_test_score_cv',  LDA_lr_test_score_cv)
+print('lr_test_score_cv:',  LDA_lr_test_score_cv)
 
 #LDA SVM
 svm.fit(LDA_X_train, y_train)
@@ -247,7 +267,7 @@ print('\n' + 'kPCA Trasformation:')
 
 kPCA_df = pd.DataFrame()
 
-for g in [0.01, 0.1, 0.5, 1, 2]:
+for g in [0.018, 0.01899, 0.019, 0.0195, 0.02, 0.03, 0.05, 0.055, 0.06, 0.065, 0.07, 0.08, 0.09, 0.1, 0.2]:
     kpca = KernelPCA(n_components=2, kernel='rbf', gamma=g)
     kPCA_X_train = kpca.fit_transform(X_train_std)
     kPCA_X_test = kpca.transform(X_test_std)
